@@ -20,3 +20,9 @@ Un ejemplo de código arbitrario sería la llamada a una API
 -   Cuando se **modifica** una de las dependencias dentro del array de dependencias.
 
 En cada caso se ejecuta luego del re-renderizado del componente que cambio su estado o que se haya creado el mismo.
+
+Si se usa una variable externa del efecto esta tendrá que estar como dependencia.
+
+## Ciclo de vida de un componente
+
+Un componente se crea/monta, vive/actualiza, y muere/desmonta

@@ -6,19 +6,43 @@ function App() {
         name: "",
         ki: "",
         description: "",
+        gender: "",
     }); // per = Personaje
 
+    const [id, setId] = useState(1);
+
     useEffect(() => {
-        fetch("https://dragonball-api.com/api/characters/1")
+        fetch(`https://dragonball-api.com/api/characters/${id}`)
             .then(res => res.json())
             .then(data => setPer(data));
-    }, []);
+    }, [id]);
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        const data = new FormData(e.target);
+        const idToFind = data.get("idToFind");
+
+        if (idToFind >= 1) {
+            setId(idToFind);
+        }
+    };
 
     return (
         <>
-            <h1>Nombre: {per.name}</h1>
+            <h1>Id: {id}</h1>
+            <h2>Nombre: {per.name}</h2>
             <span>Ki: {per.ki}</span>
             <p>Descripción: {per.description}</p>
+            <p>Genero: {per.gender}</p>
+
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="idToFind">
+                    Id:
+                    <input type="number" name="idToFind" />
+                </label>
+                <button type="submit">Buscar</button>
+            </form>
         </>
     );
 }
@@ -38,3 +62,5 @@ export default App;
 //      const font = document.getElementById("font");
 //      font.style.fontSize = `${14 + count}px`;
 // }, [count]);
+
+// poner un input type number en lugar del botón.
