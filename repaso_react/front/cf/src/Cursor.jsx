@@ -18,11 +18,13 @@ export default function Cursor() {
     useEffect(() => {
         // opción sin usar useState
         const handleMouseMove = e => {
-            iconEl.style.transform = `translate(${
-                e.clientX - iconEl.offsetWidth / 2
-            }px, ${e.clientY - iconEl.offsetHeight / 2}px)`;
-            // iconEl.style.top = `${e.clientY - iconEl.offsetHeight / 2}px`;
-            // iconEl.style.left = `${e.clientX - iconEl.offsetWidth / 2}px`;
+            // iconEl.style.transform = `translate(${
+            //     e.clientX - iconEl.offsetWidth / 2
+            // }px, ${e.clientY - iconEl.offsetHeight / 2}px)`;
+            setTimeout(() => {
+                iconEl.style.top = `${e.clientY - iconEl.offsetHeight / 2}px`;
+                iconEl.style.left = `${e.clientX - iconEl.offsetWidth / 2}px`;
+            }, 200);
         };
 
         const iconEl = document.getElementById("icon");
