@@ -16,6 +16,7 @@ export default function CharacterDetail() {
                 <div className="hero-content flex-col lg:flex-row">
                     <img
                         src={char.image}
+                        alt={char.name}
                         className="max-w-sm rounded-lg shadow-2xl"
                     />
                     <div>

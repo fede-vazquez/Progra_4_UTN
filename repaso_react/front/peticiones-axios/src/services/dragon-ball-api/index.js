@@ -8,8 +8,6 @@ export const instanceDBS = axios.create({
 // Este export es para evitar tener que cambiar las URLs dependiendo de cual estemos utilizando
 // Por ejemplo, en lugar de "./services/dragon-ball-api/characters.js" es "./services/dragon-ball-api"
 // (no se agrega index.js porque se hace automático.)
-export {
-    getAllCharacters,
-    getOneCharacterById,
-    getOneCharacterByName,
-} from "./characters";
+export * from "./characters";
+
+export * from "./planets";

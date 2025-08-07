@@ -17,13 +17,12 @@ export default function NavBar() {
                             viewBox="0 0 24 24"
                             stroke="currentColor"
                         >
-                            {" "}
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                                 strokeWidth="2"
                                 d="M4 6h16M4 12h8m-8 6h16"
-                            />{" "}
+                            />
                         </svg>
                     </div>
                     <ul
@@ -35,6 +34,9 @@ export default function NavBar() {
                         </li>
                         <li>
                             <Link href="/characters">Personajes</Link>
+                        </li>
+                        <li>
+                            <Link href="/planets">Planetas</Link>
                         </li>
                     </ul>
                 </div>
@@ -50,6 +52,9 @@ export default function NavBar() {
 
                     <li>
                         <Link href="/characters">Personajes</Link>
+                    </li>
+                    <li>
+                        <Link href="/planets">Planetas</Link>
                     </li>
                 </ul>
             </div>
