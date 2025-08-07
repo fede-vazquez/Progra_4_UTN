@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { getAllPlanets } from "@/services/dragon-ball-api";
 import CardPlanet from "@/components/planets/card-planet";
 
-// La lógica de la petición de personajes podría estar directamente acá, pero eso no permitiría hacer filtros de forma más dinámica.
-
 export default function ListOfPlanets() {
     const [planets, setPlanets] = useState([]); // planets -> characters
     useEffect(() => {
@@ -17,7 +15,7 @@ export default function ListOfPlanets() {
                 (
                     plt // plt -> planet
                 ) => (
-                    // {...ch} -> usa el express operator para pasar todos los parámetros al componente
+                    // {...plt} -> usa el express operator para pasar todos los parámetros al componente
                     <CardPlanet key={plt.id} {...plt} />
                 )
             )}

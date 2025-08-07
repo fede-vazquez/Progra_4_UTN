@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import CardCharacter from "@/components/characters/card-character";
 import { getAllCharacters } from "@/services/dragon-ball-api";
 
-// La lógica de la petición de personajes podría estar directamente acá, pero eso no permitiría hacer filtros de forma más dinámica.
-
 export default function ListOfCharacters() {
     const [chars, setChars] = useState([]); // chars -> characters
     useEffect(() => {

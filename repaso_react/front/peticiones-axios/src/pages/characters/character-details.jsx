@@ -1,10 +1,10 @@
-import { useParams } from "wouter";
+import { Link, useParams } from "wouter";
 import { getOneCharacterById } from "@/services/dragon-ball-api";
 import { useEffect, useState } from "react";
 
 export default function CharacterDetail() {
     const { id } = useParams();
-    const [char, setChar] = useState({});
+    const [char, setChar] = useState({}); // char -> character
 
     useEffect(() => {
         getOneCharacterById(id).then(data => setChar(data));
@@ -12,16 +12,45 @@ export default function CharacterDetail() {
 
     return (
         <main>
-            <section className="hero bg-base-200 min-h-screen">
+            <section className="hero bg-base-200 w-3/4 mx-auto">
                 <div className="hero-content flex-col lg:flex-row">
                     <img
                         src={char.image}
-                        alt={char.name}
-                        className="max-w-sm rounded-lg shadow-2xl"
+                        alt={`imagen de ${char.name}`}
+                        className="max-w-sm rounded-lg shadow-2xl h-80"
                     />
                     <div>
                         <h1 className="text-5xl font-bold">{char.name}</h1>
-                        <p className="py-6">{char.description}</p>
+                        <p className="py-6 max-h-60 overflow-y-scroll">
+                            {char.description}
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <br />
+
+            <section className="hero bg-base-200 w-3/4 mx-auto">
+                <div className="hero bg-base-200">
+                    <div className="hero-content flex-col lg:flex-row-reverse">
+                        <img
+                            src={char?.originPlanet?.image}
+                            className="max-w-sm rounded-lg shadow-2xl max-h-52"
+                        />
+                        <div>
+                            <h3 className="text-xl font-bold">
+                                Planeta de origen: {char?.originPlanet?.name}
+                            </h3>
+                            <p className="py-6 max-h-60 overflow-y-scroll">
+                                {char?.originPlanet?.description}
+                            </p>
+                            <Link
+                                href={`/planets/${char?.originPlanet?.id}`}
+                                className="btn btn-primary"
+                            >
+                                More info
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>
