@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
 import { getAllPlanets } from "@/services/dragon-ball-api";
 import CardPlanet from "@/components/planets/card-planet";
+import Spinner from "@/components/spinner";
+import { useReq } from "@/hooks/use-req";
 
 export default function ListOfPlanets() {
-    const [planets, setPlanets] = useState([]);
-    useEffect(() => {
-        getAllPlanets().then(data => {
-            if (data?.items) setPlanets(data?.items);
-        });
-    }, []);
+    const { data, isLoading } = useReq({ promise: getAllPlanets })
+
+    if (isLoading) return <Spinner type="primary" />
     return (
         <main className="flex flex-wrap gap-10 justify-center">
-            {planets.map(
+            {data?.items?.map(
                 (
                     plt // plt -> planet
                 ) => (

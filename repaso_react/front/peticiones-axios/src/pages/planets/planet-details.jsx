@@ -1,14 +1,14 @@
 import { Link, useParams } from "wouter";
 import { getOnePlanetById } from "@/services/dragon-ball-api";
-import { useEffect, useState } from "react";
+import Spinner from "@/components/spinner";
+import { useReq } from "@/hooks/use-req";
 
 export default function PlanetDetail() {
     const { id } = useParams();
-    const [planet, setPlanet] = useState({});
+    const { data: planet, isLoading } = useReq({ promise: () => getOnePlanetById(id) })
 
-    useEffect(() => {
-        getOnePlanetById(id).then(data => setPlanet(data));
-    }, [id]);
+
+    if (isLoading) return <Spinner type="primary" />
 
     return (
         <main>
@@ -38,7 +38,7 @@ export default function PlanetDetail() {
                 <h2 className="text-3xl">Personajes del planeta: </h2>
                 {planet?.characters?.length > 0 ? (
                     planet?.characters?.map(char => (
-                        <article className="hero bg-base-200">
+                        <article key={char.id} className="hero bg-base-200">
                             <div className="hero-content flex-col lg:flex-row-reverse">
                                 <img
                                     src={char.image}
