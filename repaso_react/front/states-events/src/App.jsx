@@ -1,9 +1,11 @@
-import Deposito from "./components/deposito";
+import Cinchada from "./components/cinchada-project/cinchada";
+import Deposito from "./components/oro-project/deposito";
 
 function App() {
     return (
         <>
-            <Deposito />
+            <Cinchada />
+            {/* <Deposito /> */}
         </>
     );
 }
