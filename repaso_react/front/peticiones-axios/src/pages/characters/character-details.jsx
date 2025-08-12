@@ -1,14 +1,15 @@
 import { Link, useParams } from "wouter";
 import { getOneCharacterById } from "@/services/dragon-ball-api";
-import { useEffect, useState } from "react";
+import Spinner from "@/components/spinner";
+import { useReq } from "@/hooks/use-req";
 
 export default function CharacterDetail() {
     const { id } = useParams();
-    const [char, setChar] = useState({}); // char -> character
 
-    useEffect(() => {
-        getOneCharacterById(id).then(data => setChar(data));
-    }, [id]);
+    const { data: char, isLoading } = useReq({ promise: () => getOneCharacterById(id) })
+
+
+    if (isLoading) return <Spinner type="primary" />
 
     return (
         <main>

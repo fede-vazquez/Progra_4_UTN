@@ -3,7 +3,7 @@ import { getAllPlanets } from "@/services/dragon-ball-api";
 import CardPlanet from "@/components/planets/card-planet";
 
 export default function ListOfPlanets() {
-    const [planets, setPlanets] = useState([]); // planets -> characters
+    const [planets, setPlanets] = useState([]);
     useEffect(() => {
         getAllPlanets().then(data => {
             if (data?.items) setPlanets(data?.items);

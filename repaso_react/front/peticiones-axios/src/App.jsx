@@ -1,40 +1,51 @@
 import { Switch, Route } from "wouter";
-import Home from "./pages/home";
-import ListOfCharacters from "./pages/characters/list-of-characters";
-import CharacterDetail from "./pages/characters/character-details";
-import ListOfPlanets from "./pages/planets/list-of-planets";
 import NavBar from "./components/nav-bar";
-import PlanetDetail from "./pages/planets/planet-details";
-import Page404 from "./pages/page404";
+import { Suspense, lazy } from "react";
+import Spinner from "./components/spinner";
+
+// El lazy load va a funcionar solo si el componente está exportado por default (manera simple)
+// Es para que no carguen todos los componentes aunque no sea vean
+const HomePage = lazy(() => import("./pages/home"));
+const ListOfCharactersPage = lazy(() =>
+    import("./pages/characters/list-of-characters")
+);
+const CharacterDetailPage = lazy(() =>
+    import("./pages/characters/character-details")
+);
+const ListOfPlanetsPage = lazy(() => import("./pages/planets/list-of-planets"));
+const PlanetDetailPage = lazy(() => import("./pages/planets/planet-details"));
+const Page404Page = lazy(() => import("./pages/page404"));
 
 function App() {
     return (
         <>
             <NavBar />
 
-            <Switch>
-                <Route path={"/"}>
-                    <Home />
-                </Route>
+            <Suspense fallback={<Spinner />}>
+                <Switch>
+                    <Route path={"/"}>
+                        <HomePage />
+                    </Route>
 
-                <Route path={"/characters"}>
-                    <ListOfCharacters />
-                </Route>
+                    <Route path={"/characters"}>
+                        <ListOfCharactersPage />
+                    </Route>
 
-                <Route path={"/characters/:id"}>
-                    <CharacterDetail />
-                </Route>
+                    <Route path={"/characters/:id"}>
+                        <CharacterDetailPage />
+                    </Route>
 
-                <Route path={"/planets"}>
-                    <ListOfPlanets />
-                </Route>
+                    <Route path={"/planets"}>
+                        <ListOfPlanetsPage />
+                    </Route>
 
-                <Route path={"/planets/:id"}>
-                    <PlanetDetail />
-                </Route>
+                    <Route path={"/planets/:id"}>
+                        <PlanetDetailPage />
+                    </Route>
 
-                <Route component={Page404} />
-            </Switch>
+                    <Route component={Page404Page} />
+                </Switch>
+            </Suspense>
         </>
     );
 }
