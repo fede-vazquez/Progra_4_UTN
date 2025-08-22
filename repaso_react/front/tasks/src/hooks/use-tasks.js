@@ -1,5 +1,6 @@
 import { isNullOrEmpty } from "../utils/string-validation";
 import { useArray } from "./use-array";
+import { v4 as uuidv4 } from "uuid";
 
 export const useTasks = (initialValue = []) => {
     const {
@@ -18,7 +19,7 @@ export const useTasks = (initialValue = []) => {
             if (taskFound) return reject("task already added or not completed");
 
             const task = {
-                id: new Date(),
+                id: uuidv4(),
                 text,
                 completed: false,
             };

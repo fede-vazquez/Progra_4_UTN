@@ -1,4 +1,6 @@
 import { useTasks } from "../hooks/use-tasks";
+import Task from "./task";
+import TaskList from "./task-list";
 
 export default function FormTask() {
     const { tasks, addTask, completeTask, deleteTask } = useTasks();
@@ -25,23 +27,18 @@ export default function FormTask() {
                 </div>
                 <button>Agregar</button>
             </form>
-            <ul>
-                {tasks?.map(t => (
-                    <li key={t.id}>
-                        <span className={`${t.completed && "text-green-700"}`}>
-                            {t.text}
-                        </span>
-                        {!t.completed && (
-                            <input
-                                type="checkbox"
-                                id={t.id}
-                                onClick={() => completeTask(t.id)}
-                            />
-                        )}
-                        <button onClick={() => deleteTask(t.id)}> 🗑</button>
-                    </li>
-                ))}
-            </ul>
+            <TaskList
+                title="Tareas"
+                tasks={tasks.filter(t => !t.completed)}
+                completeTask={completeTask}
+                deleteTask={deleteTask}
+            />
+            <TaskList
+                title="Tareas completadas"
+                tasks={tasks.filter(t => t.completed)}
+                completeTask={completeTask}
+                deleteTask={deleteTask}
+            />
         </>
     );
 }
