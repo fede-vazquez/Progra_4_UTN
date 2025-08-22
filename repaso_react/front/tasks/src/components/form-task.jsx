@@ -1,40 +1,19 @@
-import { useState } from "react";
-import { isNullOrEmpty } from "../utils/string-validation";
+import { useTasks } from "../hooks/use-tasks";
 
 export default function FormTask() {
-    const [tasks, setTasks] = useState([]);
+    const { tasks, addTask, completeTask, deleteTask } = useTasks();
 
     const handleSubmit = e => {
         e.preventDefault();
-
-        const data = new FormData(e.target);
+        const form = e.target;
+        const data = new FormData(form);
         const text = data.get("task");
-
-        if (isNullOrEmpty(text)) return;
-
-        const taskFound = tasks.find(
-            t => t.text == text.trim() && t.completed == false
-        );
-
-        if (taskFound && !taskFound.completed) return;
-        const task = {
-            id: new Date(),
-            text,
-            completed: false,
-        };
-
-        setTasks(prev => [...prev, task]);
-
-        e.target.reset();
-    };
-
-    const handleSwitchComplete = id => {
-        const taskFound = tasks.find(t => t.id == id);
-        taskFound.completed = true;
-
-        const updatedTasks = tasks.filter(t => t.id != id);
-
-        setTasks([...updatedTasks, taskFound]);
+        addTask(text)
+            .then(msg => {
+                console.log(msg);
+                form.reset();
+            })
+            .catch(err => console.error(err));
     };
 
     return (
@@ -44,30 +23,22 @@ export default function FormTask() {
                     <label htmlFor="task">Tarea:</label>
                     <input type="text" id="task" name="task" />
                 </div>
-                <button className="cursor-pointer">Agregar</button>
-                <button
-                    onClick={() => {
-                        console.log(tasks);
-                    }}
-                    className="cursor-pointer"
-                >
-                    Tareas
-                </button>
+                <button>Agregar</button>
             </form>
             <ul>
-                {tasks?.map(task => (
-                    <li
-                        key={task.id}
-                        className={`${task.completed && "text-green-500"}`}
-                    >
-                        {task.text}
-                        {!task.completed && (
+                {tasks?.map(t => (
+                    <li key={t.id}>
+                        <span className={`${t.completed && "text-green-700"}`}>
+                            {t.text}
+                        </span>
+                        {!t.completed && (
                             <input
                                 type="checkbox"
-                                id={task.id}
-                                onClick={() => handleSwitchComplete(task.id)}
+                                id={t.id}
+                                onClick={() => completeTask(t.id)}
                             />
                         )}
+                        <button onClick={() => deleteTask(t.id)}> 🗑</button>
                     </li>
                 ))}
             </ul>
