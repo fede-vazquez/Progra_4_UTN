@@ -1,9 +1,7 @@
-import { useTasks } from "../hooks/use-tasks";
-import Task from "./task";
-import TaskList from "./task-list";
+import { useTasks } from "../contexts/tasks/use-tasks";
 
 export default function FormTask() {
-    const { tasks, addTask, completeTask, deleteTask } = useTasks();
+    const { addTask } = useTasks();
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -27,18 +25,6 @@ export default function FormTask() {
                 </div>
                 <button>Agregar</button>
             </form>
-            <TaskList
-                title="Tareas"
-                tasks={tasks.filter(t => !t.completed)}
-                completeTask={completeTask}
-                deleteTask={deleteTask}
-            />
-            <TaskList
-                title="Tareas completadas"
-                tasks={tasks.filter(t => t.completed)}
-                completeTask={completeTask}
-                deleteTask={deleteTask}
-            />
         </>
     );
 }

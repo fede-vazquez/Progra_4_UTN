@@ -20,5 +20,5 @@ export const useArray = (arr = []) => {
         }
     };
 
-    return { array, addItem, deleteOrUpdateItem };
+    return { array, addItem, deleteOrUpdateItem, set: setArray };
 };

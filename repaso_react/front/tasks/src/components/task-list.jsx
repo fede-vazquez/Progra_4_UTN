@@ -1,22 +1,17 @@
+import { useTasks } from "../contexts/tasks/use-tasks";
 import Task from "./task";
 
-export default function TaskList({ title, tasks, completeTask, deleteTask }) {
+export default function TaskList({ title, completed = false }) {
+    const { tasks } = useTasks();
     return (
         <section className="border border-black p-2">
             <h3>{title}</h3>
             <ul>
-                {tasks?.map(t => (
-                    <Task
-                        key={t.id}
-                        onComplete={() => {
-                            completeTask(t.id);
-                        }}
-                        onDelete={() => {
-                            deleteTask(t.id);
-                        }}
-                        {...t}
-                    />
-                ))}
+                {tasks
+                    ?.filter(t => t.completed == completed)
+                    ?.map(t => (
+                        <Task key={t.id} {...t} />
+                    ))}
             </ul>
         </section>
     );
