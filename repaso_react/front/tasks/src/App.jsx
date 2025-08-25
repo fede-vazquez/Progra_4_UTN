@@ -16,3 +16,12 @@ function App() {
 }
 
 export default App;
+
+/*
+Teoría
+
+Los contextos, siguiendo una buena práctica, se crean a 3 archivos:
+- 1er: El contexto propiamente dicho
+- 2do: El proveedor del contexto
+- 3ro: Un custom hook que manipula la funcionalidades (si las posee) del contexto
+*/
