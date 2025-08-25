@@ -1,7 +1,7 @@
-import { useTasks } from "../contexts/tasks/use-tasks";
+import { useTaskStore } from "../stores/tasks-store";
 
 export default function Task({ id, text, completed }) {
-    const { deleteTask, completeTask } = useTasks();
+    const { completeTask: complete, deleteTask: del, tasks } = useTaskStore();
     return (
         <li key={id}>
             <span className={`${completed && "text-green-700"}`}>{text}</span>
@@ -9,10 +9,21 @@ export default function Task({ id, text, completed }) {
                 <input
                     type="checkbox"
                     id={id}
-                    onClick={() => completeTask(id)}
+                    onClick={() => {
+                        complete(id);
+                        console.log(tasks);
+                    }}
                 />
             )}
-            <button onClick={() => deleteTask(id)}> 🗑</button>
+            <button
+                onClick={() => {
+                    del(id);
+                    console.log(tasks);
+                }}
+            >
+                {" "}
+                🗑
+            </button>
         </li>
     );
 }

@@ -1,19 +1,16 @@
-import { useTasks } from "../contexts/tasks/use-tasks";
+import { useTaskStore } from "../stores/tasks-store";
 
 export default function FormTask() {
-    const { addTask } = useTasks();
+    const { addTask: add } = useTaskStore();
 
     const handleSubmit = e => {
         e.preventDefault();
         const form = e.target;
         const data = new FormData(form);
         const text = data.get("task");
-        addTask(text)
-            .then(msg => {
-                console.log(msg);
-                form.reset();
-            })
-            .catch(err => console.error(err));
+
+        add(text);
+        form.reset();
     };
 
     return (
