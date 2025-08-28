@@ -1,11 +1,17 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-export const useStore = create((set, get) => ({
+const handle = (set, get) => ({
     contador: 0,
+
     aumentarContador: () => set(state => ({ contador: state.contador + 1 })),
     disminuirContador: () => set(state => ({ contador: state.contador - 1 })),
-    resetearContador: () => set(() => ({ contador: 0 })),
+    resetearContador: () => set({ contador: 0 }),
+});
 
+export const useCountStore = create(persist(handle, { name: "counter" }));
+
+export const useUserStore = create(set => ({
     usuarios: [],
 
     cargarUsuarios: async () => {

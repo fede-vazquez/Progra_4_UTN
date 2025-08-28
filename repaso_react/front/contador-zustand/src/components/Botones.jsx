@@ -1,8 +1,8 @@
-import { useStore } from "../stores/contador";
+import { useCountStore } from "../stores/contador";
 
 export default function Botones() {
     const { aumentarContador, disminuirContador, resetearContador } =
-        useStore();
+        useCountStore();
 
     return (
         <div>

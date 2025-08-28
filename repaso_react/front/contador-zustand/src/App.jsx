@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import Botones from "./components/Botones";
 import DisplayContador from "./components/display-contador";
-import { useStore } from "./stores/contador";
+import { useUserStore } from "./stores/contador";
 
 function App() {
-    const { usuarios, cargarUsuarios } = useStore();
+    const { usuarios, cargarUsuarios } = useUserStore();
 
     useEffect(() => {
         cargarUsuarios();
