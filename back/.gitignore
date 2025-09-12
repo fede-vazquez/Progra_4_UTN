@@ -1,0 +1,58 @@
+# =======================================
+# .gitignore para proyectos .NET / ASP.NET
+# Ubícalo en la carpeta "back/"
+# =======================================
+
+# Compilación y dependencias
+bin/
+obj/
+[Bb]uild/
+[Ll]ogs/
+
+# Archivos de usuario de Visual Studio / Rider
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+.idea/
+.vscode/
+
+# Configuración de dependencias NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuget.props
+*.nuget.targets
+
+# Archivos temporales
+*.tmp
+*.temp
+*.log
+*.vspscc
+*_i.c
+*_p.c
+*.dbmdl
+*.bak
+*.swp
+
+# Configuración de IIS / hosting
+.vs/
+*.vsconfig
+
+# Secretos de usuario (no subir)
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# Archivos de cobertura y pruebas
+TestResult*/
+*.coverage
+*.coveragexml
+*.trx
+
+# Publicaciones
+publish/
+*.Publish.xml
+
+# Otros
+_ReSharper.Caches/
