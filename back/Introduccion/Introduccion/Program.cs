@@ -1,4 +1,3 @@
-using Introduccion.Models;
 using Introduccion.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,8 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Services
-builder.Services.AddScoped<IServices<Cine>, CineServices>();
-builder.Services.AddScoped<IServices<Helado>, HeladoServices>();
+builder.Services.AddScoped<ICineServices, CineServices>();
 
 var app = builder.Build();
 

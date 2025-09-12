@@ -1,4 +1,4 @@
-﻿namespace Introduccion.Models
+﻿namespace Introduccion.Models.Cine
 {
     public class Cine
     {
