@@ -1,0 +1,12 @@
+Pancho
+- Id: entero
+- Nombre, cadena no nula, maximo 30 caracteres
+- IsVegano, boolean
+- Precio, decimal
+- Aderesos, lista de cadenas de caracteres
+
+endpoints /ar/
+
+/panchos -> id, nombre, precio
+/panchos/{id} -> todo
+/panchos/aderezo/{aderezo} -> id, nombre, precio, aderesos
