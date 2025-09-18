@@ -1,5 +1,7 @@
 ﻿using Introduccion.Models.Cine;
 using Introduccion.Models.Cine.DTO;
+using Introduccion.Utils;
+using System.Net;
 
 namespace Introduccion.Services
 {
@@ -29,7 +31,7 @@ namespace Introduccion.Services
             }
             else
             {
-                throw new Exception($"No se encontro el cine con el ID = {id}");
+                throw new HttpResponseError(HttpStatusCode.NotFound, $"No se encontro el cine con el ID = {id}");
             }
         }
     }
