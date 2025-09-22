@@ -97,5 +97,26 @@ namespace Introduccion.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new HttpMessage(ex.Message));
             }
         }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(Cine), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
+        public ActionResult<Cine> UpdateOneById(int id, [FromBody]UpdateCineDTO updateDTO)
+        {
+            try
+            {
+                var cine = _services.UpdateOneById(id, updateDTO);
+                return Ok(cine);
+            }
+            catch (HttpResponseError ex)
+            {
+                return StatusCode((int)ex.StatusCode, new HttpMessage(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new HttpMessage(ex.Message));
+            }
+        }
     }
 }

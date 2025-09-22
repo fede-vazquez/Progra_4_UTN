@@ -1,3 +1,4 @@
+using Introduccion.Config;
 using Introduccion.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,9 @@ builder.Services.AddSwaggerGen();
 
 // Services
 builder.Services.AddScoped<ICineServices, CineServices>();
+
+// Mapper
+builder.Services.AddAutoMapper(typeof(Mapping));
 
 var app = builder.Build();
 
