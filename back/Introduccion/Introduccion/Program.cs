@@ -1,5 +1,8 @@
 using Introduccion.Config;
 using Introduccion.Services;
+using Introduccion.Utils;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,22 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errors = context.ModelState
+        .Where(x => x.Value?.Errors.Count > 0)
+        .ToDictionary(
+            kvp => kvp.Key,
+            kvp =>
+                kvp.Value?.Errors.Select(e => e.ErrorMessage).ToArray()
+                ?? Array.Empty<string>()
+        );
+        return new BadRequestObjectResult(new ValidationErrorResponse(errors));
+    };
+});
 
 // Services
 builder.Services.AddScoped<ICineServices, CineServices>();

@@ -3,7 +3,6 @@ using Introduccion.Models.Cine.DTO;
 using Introduccion.Services;
 using Introduccion.Utils;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -14,16 +13,14 @@ namespace Introduccion.Controllers
     public class CineController : ControllerBase
     {
         private readonly ICineServices _services;
-        public CineController(ICineServices services)
-        {
+        public CineController(ICineServices services) {
             _services = services;
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<CinesDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<Cine>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
-        public ActionResult<List<CinesDTO>> GetAll()
-        {
+        public ActionResult<List<CinesDTO>> GetAll() {
             try
             {
                 var cines = _services.GetAll();
@@ -31,7 +28,10 @@ namespace Introduccion.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new HttpMessage(ex.Message));
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    new HttpMessage(ex.Message)
+                );
             }
         }
 
@@ -39,49 +39,59 @@ namespace Introduccion.Controllers
         [ProducesResponseType(typeof(Cine), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
-        public ActionResult<Cine> GetOneById(int id)
-        {
+        public ActionResult<Cine> GetOneById(int id) {
             try
             {
                 var cine = _services.GetOneById(id);
                 return Ok(cine);
             }
-            catch (HttpResponseError ex)
-            {
-                return StatusCode((int)ex.StatusCode, new HttpMessage(ex.Message));
+            catch (HttpResponseError ex) {
+                return StatusCode(
+                    (int)ex.StatusCode,
+                    new HttpMessage(ex.Message)
+                );
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new HttpMessage(ex.Message));
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    new HttpMessage(ex.Message)
+                );
             }
         }
 
         [HttpPost]
         [ProducesResponseType(typeof(Cine), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
         public ActionResult<Cine> CreateOne([FromBody]CreateCineDTO createDTO)
         {
             try
             {
                 var cine = _services.CreateOne(createDTO);
-                return Created("Create cine", cine);
+                return Created("Create Cine", cine);
             }
             catch (HttpResponseError ex)
             {
-                return StatusCode((int)ex.StatusCode, new HttpMessage(ex.Message));
+                return StatusCode(
+                    (int)ex.StatusCode,
+                    new HttpMessage(ex.Message)
+                );
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new HttpMessage(ex.Message));
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    new HttpMessage(ex.Message)
+                );
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
-        public ActionResult DeleteOneById([FromBody]int id)
+        public ActionResult DeleteOneById(int id)
         {
             try
             {
@@ -90,32 +100,45 @@ namespace Introduccion.Controllers
             }
             catch (HttpResponseError ex)
             {
-                return StatusCode((int)ex.StatusCode, new HttpMessage(ex.Message));
+                return StatusCode(
+                    (int)ex.StatusCode,
+                    new HttpMessage(ex.Message)
+                );
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new HttpMessage(ex.Message));
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    new HttpMessage(ex.Message)
+                );
             }
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(Cine), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
-        public ActionResult<Cine> UpdateOneById(int id, [FromBody]UpdateCineDTO updateDTO)
+        public ActionResult<Cine> UpdateOneById(int id, [FromBody]UpdateCineDTO updateDto)
         {
             try
             {
-                var cine = _services.UpdateOneById(id, updateDTO);
+                var cine = _services.UpdateOneById(id, updateDto);
                 return Ok(cine);
             }
             catch (HttpResponseError ex)
             {
-                return StatusCode((int)ex.StatusCode, new HttpMessage(ex.Message));
+                return StatusCode(
+                    (int)ex.StatusCode,
+                    new HttpMessage(ex.Message)
+                );
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new HttpMessage(ex.Message));
+                return StatusCode(
+                    StatusCodes.Status500InternalServerError,
+                    new HttpMessage(ex.Message)
+                );
             }
         }
     }
