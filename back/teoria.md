@@ -65,3 +65,13 @@ Un decorador aplica a una clase a propiedad adentro de una clase a un método ad
 Es una biblioteca para documentar código.
 
 Si da error de privacidad cuando lo ejecutemos, apretamos donde esté el error y tipeamos "thisisunsafe"
+
+# DataSet
+
+## ORM
+
+### Comandos entity framework
+
+-   add-migration DbCreated
+
+-   update-database
