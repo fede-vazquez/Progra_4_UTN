@@ -11,6 +11,6 @@ namespace PancheriaJP.Models.Pancho
         public string Nombre { get; set; } = null!;
         public bool IsVegano { get; set; }
         public double Precio { get; set; }
-        public List<string> Aderezos { get; set; } = new();
+        public List<string> Aderezos { get; set; } = null!;
     }
 }

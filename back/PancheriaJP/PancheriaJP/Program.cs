@@ -3,8 +3,8 @@ using Introduccion.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PancheriaJP.Config;
+using PancheriaJP.Repositories;
 using PancheriaJP.Services;
-using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +33,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 // Services
 builder.Services.AddScoped<PanchoServices>();
+builder.Services.AddScoped<IPanchoRepository, PanchoRepository>();
 
 // Mapper
 builder.Services.AddAutoMapper(opts => { }, typeof(Mapping));

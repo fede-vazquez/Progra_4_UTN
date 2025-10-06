@@ -21,11 +21,11 @@ namespace PancheriaJP.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(List<Pancho>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
-        public ActionResult<List<PanchosDTO>> GetAll()
+        async public Task<ActionResult<List<PanchosDTO>>> GetAll()
         {
             try
             {
-                var panchos = _panchoServices.GetAll();
+                var panchos = await _panchoServices.GetAll();
                 return Ok(panchos);
             }
             catch (Exception ex)
@@ -40,11 +40,11 @@ namespace PancheriaJP.Controllers
         [HttpGet("aderezo/{aderezo}")]
         [ProducesResponseType(typeof(List<Pancho>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
-        public ActionResult<List<PanchoAderezoDTO>> GetAllAderezo(string aderezo)
+        async public Task<ActionResult<List<PanchoAderezoDTO>>> GetAllAderezo(string aderezo)
         {
             try
             {
-                var panchos = _panchoServices.GetAllByAderezo(aderezo);
+                var panchos = await _panchoServices.GetAllByAderezo(aderezo);
                 return Ok(panchos);
             }
             catch (Exception ex)
@@ -60,12 +60,12 @@ namespace PancheriaJP.Controllers
         [ProducesResponseType(typeof(Pancho), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
-        public ActionResult<Pancho> GetOneById(int id)
+        async public Task<ActionResult<Pancho>> GetOneById(int id)
         {
             try
             {
-                var cine = _panchoServices.GetOneById(id);
-                return Ok(cine);
+                var pancho = await _panchoServices.GetOneById(id);
+                return Ok(pancho);
             }
             catch (HttpResponseError ex)
             {
@@ -87,11 +87,11 @@ namespace PancheriaJP.Controllers
         [ProducesResponseType(typeof(Pancho), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
-        public ActionResult<Pancho> CreateOne([FromBody] CreatePanchoDTO createDTO)
+        async public Task<ActionResult<Pancho>> CreateOne([FromBody] CreatePanchoDTO createDTO)
         {
             try
             {
-                var pancho = _panchoServices.CreateOne(createDTO);
+                var pancho = await _panchoServices.CreateOne(createDTO);
                 return Created("Create Pancho", pancho);
             }
             catch (HttpResponseError ex)
@@ -114,11 +114,11 @@ namespace PancheriaJP.Controllers
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
-        public ActionResult DeleteOneById(int id)
+        async public Task<ActionResult> DeleteOneById(int id)
         {
             try
             {
-                _panchoServices.DeleteOneById(id);
+                await _panchoServices.DeleteOneById(id);
                 return Ok(new HttpMessage($"Pancho con ID = {id} eliminado"));
             }
             catch (HttpResponseError ex)
@@ -142,11 +142,11 @@ namespace PancheriaJP.Controllers
         [ProducesResponseType(typeof(ValidationErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
-        public ActionResult<Pancho> UpdateOneById(int id, [FromBody] UpdatePanchoDTO updateDto)
+        async public Task<ActionResult<Pancho>> UpdateOneById(int id, [FromBody] UpdatePanchoDTO updateDto)
         {
             try
             {
-                var pancho = _panchoServices.UpdateOneById(id, updateDto);
+                var pancho = await _panchoServices.UpdateOneById(id, updateDto);
                 return Ok(pancho);
             }
             catch (HttpResponseError ex)

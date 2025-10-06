@@ -12,6 +12,6 @@ namespace PancheriaJP.Models.Pancho.Dto
         [Range(0.01, double.MaxValue)]
         public double? Precio { get; set; }
 
-        public List<string>? Aderezos { get; set; } = new();
+        public List<string>? Aderezos { get; set; } = null!;
     }
 }
