@@ -33,7 +33,13 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 // Services
 builder.Services.AddScoped<PanchoServices>();
+builder.Services.AddScoped<IngredienteServices>();
+builder.Services.AddScoped<CategoriaServices>();
+
+//Repositories
 builder.Services.AddScoped<IPanchoRepository, PanchoRepository>();
+builder.Services.AddScoped<IIngredienteRepository, IngredienteRepository>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 
 // Mapper
 builder.Services.AddAutoMapper(opts => { }, typeof(Mapping));

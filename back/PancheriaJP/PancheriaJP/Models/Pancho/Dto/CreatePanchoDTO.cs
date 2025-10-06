@@ -17,5 +17,8 @@ namespace PancheriaJP.Models.Pancho.Dto
 
         [Required]
         public List<string> Aderezos { get; set; } = new();
+
+        [Required]
+        public int CategoriaId { get; set; }
     }
 }

@@ -1,4 +1,8 @@
 ﻿using AutoMapper;
+using PancheriaJP.Models.Categoria;
+using PancheriaJP.Models.Categoria.Dto;
+using PancheriaJP.Models.Ingrediente;
+using PancheriaJP.Models.Ingrediente.Dto;
 using PancheriaJP.Models.Pancho;
 using PancheriaJP.Models.Pancho.Dto;
 
@@ -14,6 +18,7 @@ namespace Introduccion.Config
             CreateMap<double?, double>().ConvertUsing((src, dest) => src ?? dest);
 
             CreateMap<Pancho, PanchosDTO>();
+            CreateMap<Pancho, PanchoDTO>().ReverseMap();
             CreateMap<Pancho, PanchoAderezoDTO>();
 
             CreateMap<CreatePanchoDTO, Pancho>().ReverseMap();
@@ -22,6 +27,9 @@ namespace Introduccion.Config
             {
                 opts.Condition((_, _, srcMember) => srcMember != null);
             });
+
+            CreateMap<CreateUpdateIngredienteDTO, Ingrediente>();
+            CreateMap<CreateUpdateCategoriaDTO, Categoria>();
         }
     }
 }

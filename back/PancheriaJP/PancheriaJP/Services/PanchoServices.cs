@@ -19,14 +19,14 @@ namespace PancheriaJP.Services
             _repo = repo;
         }
 
-        async private Task<Pancho> GetOneByIdOrException(int id)
+        async private Task<PanchoDTO> GetOneByIdOrException(int id)
         {
             var panchito = await _repo.GetOne(p => p.Id == id);
             if (panchito == null)
             {
                 throw new HttpResponseError(HttpStatusCode.NotFound, $"No hay panchito con id = {id}");
             }
-            return panchito;
+            return _mapper.Map<PanchoDTO>(panchito);
         }
 
         async public Task<List<PanchosDTO>> GetAll()
@@ -35,7 +35,7 @@ namespace PancheriaJP.Services
             return _mapper.Map<List<PanchosDTO>>(panchos);
         }
 
-        async public Task<Pancho> GetOneById(int id) => await GetOneByIdOrException(id);
+        async public Task<PanchoDTO> GetOneById(int id) => await GetOneByIdOrException(id);
 
         async public Task<List<PanchoAderezoDTO>> GetAllByAderezo(string aderezo)
         {
@@ -58,20 +58,22 @@ namespace PancheriaJP.Services
             return pancho;
         }
 
-        async public Task<Pancho> UpdateOneById(int id, UpdatePanchoDTO updateDTO)
+        async public Task<PanchoDTO> UpdateOneById(int id, UpdatePanchoDTO updateDTO)
         {
-            var pancho = await GetOneByIdOrException(id);
+            var p = await GetOneByIdOrException(id);
+            var panchito = _mapper.Map<Pancho>(p);
 
-            var panchoMapped = _mapper.Map(updateDTO, pancho);
+            var panchoMapped = _mapper.Map(updateDTO, panchito);
 
             await _repo.UpdateOne(panchoMapped);
 
-            return panchoMapped;
+            return _mapper.Map<PanchoDTO>(panchoMapped);
         }
 
         async public Task DeleteOneById(int id)
         {
-            var pancho = await GetOneByIdOrException(id);
+            var p = await GetOneByIdOrException(id);
+            var pancho = _mapper.Map<Pancho>(p);
             await _repo.DeleteOne(pancho);
         }
     }
