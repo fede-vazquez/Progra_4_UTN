@@ -1,5 +1,6 @@
 using Auth.Config;
 using Auth.Repositories;
+using Auth.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Services
+builder.Services.AddScoped<UserServices>();
+builder.Services.AddScoped<AuthServices>();
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
