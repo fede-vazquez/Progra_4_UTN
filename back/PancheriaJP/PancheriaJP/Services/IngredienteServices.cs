@@ -62,5 +62,18 @@ namespace PancheriaJP.Services
             var ing = await GetOneByIdOrException(id);
             await _repo.DeleteOne(ing);
         }
+
+        async public Task<List<Ingrediente>> GetManyByIds(List<int> Ids)
+        {
+            if (Ids.Count <= 0 || Ids == null)
+            {
+                throw new HttpResponseError(
+                    HttpStatusCode.BadRequest,
+                    "La lista de Ids esta vacia"
+                );
+            }
+            var ings = await _repo.GetAll(x => Ids.Contains(x.Id));
+            return ings.ToList();
+        }
     }
 }

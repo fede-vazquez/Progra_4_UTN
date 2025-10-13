@@ -37,25 +37,6 @@ namespace PancheriaJP.Controllers
             }
         }
 
-        [HttpGet("aderezo/{aderezo}")]
-        [ProducesResponseType(typeof(List<Pancho>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
-        async public Task<ActionResult<List<PanchoAderezoDTO>>> GetAllAderezo(string aderezo)
-        {
-            try
-            {
-                var panchos = await _panchoServices.GetAllByAderezo(aderezo);
-                return Ok(panchos);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(
-                    StatusCodes.Status500InternalServerError,
-                    new HttpMessage(ex.Message)
-                );
-            }
-        }
-
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Pancho), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status404NotFound)]

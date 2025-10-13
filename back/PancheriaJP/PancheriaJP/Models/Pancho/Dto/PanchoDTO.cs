@@ -8,7 +8,7 @@ namespace PancheriaJP.Models.Pancho.Dto
         public string Nombre { get; set; } = null!;
         public bool IsVegano { get; set; }
         public double Precio { get; set; }
-        public List<string> Aderezos { get; set; } = null!;
         public Categoria.Categoria Categoria { get; set; } = null!;
+        public List<Ingrediente.Ingrediente> Ingredientes { get; set; } = null!;
     }
 }

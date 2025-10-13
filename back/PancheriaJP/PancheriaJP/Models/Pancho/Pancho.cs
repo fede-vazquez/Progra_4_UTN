@@ -12,10 +12,12 @@ namespace PancheriaJP.Models.Pancho
         public string Nombre { get; set; } = null!;
         public bool IsVegano { get; set; }
         public double Precio { get; set; }
-        public List<string> Aderezos { get; set; } = null!;
+        public List<Ingrediente.Ingrediente> Ingredientes { get; set; } = new();
         public Categoria.Categoria Categoria { get; set; } = null!;
 
         [ForeignKey(nameof(Categoria))]
         public int CategoriaId { get; set; }
     }
+
+    
 }

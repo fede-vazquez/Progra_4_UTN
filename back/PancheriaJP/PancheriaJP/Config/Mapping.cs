@@ -14,12 +14,11 @@ namespace Introduccion.Config
 
             CreateMap<bool?, bool>().ConvertUsing((src, dest) => src ?? dest);
             CreateMap<string?, string>().ConvertUsing((src, dest) => src ?? dest);
-            CreateMap<List<string>?, List<string>>().ConvertUsing((src, dest) => src ?? dest);
+   
             CreateMap<double?, double>().ConvertUsing((src, dest) => src ?? dest);
 
             CreateMap<Pancho, PanchosDTO>();
             CreateMap<Pancho, PanchoDTO>().ReverseMap();
-            CreateMap<Pancho, PanchoAderezoDTO>();
 
             CreateMap<CreatePanchoDTO, Pancho>().ReverseMap();
 

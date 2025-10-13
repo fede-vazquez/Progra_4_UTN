@@ -11,4 +11,10 @@ namespace PancheriaJP.Models.Ingrediente
 
         public string Nombre { get; set; } = null!;
     }
+
+    public class PanchoIngrediente
+    {
+        public int PanchoId { get; set; }
+        public int IngredienteId { get; set; }
+    }
 }

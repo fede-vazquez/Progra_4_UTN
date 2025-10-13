@@ -13,10 +13,14 @@ namespace PancheriaJP.Services
     {
         private readonly IMapper _mapper;
         private readonly IPanchoRepository _repo;
-        public PanchoServices(IMapper mapper, IPanchoRepository repo)
+        private readonly CategoriaServices _catServices;
+        private readonly IngredienteServices _ingServices;
+        public PanchoServices(IMapper mapper, IPanchoRepository repo, CategoriaServices catServices, IngredienteServices ingServices)
         {
             _mapper = mapper;
             _repo = repo;
+            _catServices = catServices;
+            _ingServices = ingServices;
         }
 
         async private Task<PanchoDTO> GetOneByIdOrException(int id)
@@ -37,25 +41,19 @@ namespace PancheriaJP.Services
 
         async public Task<PanchoDTO> GetOneById(int id) => await GetOneByIdOrException(id);
 
-        async public Task<List<PanchoAderezoDTO>> GetAllByAderezo(string aderezo)
+        async public Task<PanchoDTO> CreateOne(CreatePanchoDTO createDTO)
         {
-            var panchos = await _repo.GetAll(p =>
-                p.Aderezos.Contains(aderezo.ToLower())
-            );
-
-            return _mapper.Map<List<PanchoAderezoDTO>>(panchos);
-        }
-
-        async public Task<Pancho> CreateOne(CreatePanchoDTO createDTO)
-        {
-            if (createDTO.Aderezos != null && createDTO.Aderezos.Count > 0) {
-                createDTO.Aderezos = createDTO.Aderezos.Select(x => x.ToLower()).ToList();
-            }
             var pancho = _mapper.Map<Pancho>(createDTO);
+
+            var ings = await _ingServices.GetManyByIds(createDTO.IngredientesIds);
+            pancho.Ingredientes = ings;
 
             await _repo.CreateOne(pancho);
 
-            return pancho;
+            var cat = await _catServices.GetOneById(pancho.CategoriaId);
+            pancho.Categoria = cat;
+
+            return _mapper.Map<PanchoDTO>(pancho);
         }
 
         async public Task<PanchoDTO> UpdateOneById(int id, UpdatePanchoDTO updateDTO)

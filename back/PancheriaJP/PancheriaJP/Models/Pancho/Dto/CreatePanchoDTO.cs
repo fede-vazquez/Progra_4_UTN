@@ -16,9 +16,9 @@ namespace PancheriaJP.Models.Pancho.Dto
         public double Precio { get; set; }
 
         [Required]
-        public List<string> Aderezos { get; set; } = new();
+        public int CategoriaId { get; set; }
 
         [Required]
-        public int CategoriaId { get; set; }
+        public List<int> IngredientesIds { get; set; } = new();
     }
 }

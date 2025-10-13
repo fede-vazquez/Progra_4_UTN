@@ -15,6 +15,15 @@ namespace PancheriaJP.Config
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Categoria>().HasIndex(x => x.Nombre).IsUnique();
+            modelBuilder.Entity<Ingrediente>().HasIndex(x => x.Nombre).IsUnique();
+            modelBuilder.Entity<Pancho>()
+                .HasMany(x => x.Ingredientes)
+                .WithMany()
+                .UsingEntity<PanchoIngrediente>(
+                    r => r.HasOne<Ingrediente>().WithMany().HasForeignKey(x => x.IngredienteId),
+                    l => l.HasOne<Pancho>().WithMany().HasForeignKey(x => x.PanchoId)
+                );
         }
     }
 }

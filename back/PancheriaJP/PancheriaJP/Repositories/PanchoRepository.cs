@@ -20,7 +20,10 @@ namespace PancheriaJP.Repositories
             IQueryable<Pancho> query = dbSet;
             if (filter != null)
             {
-                query = query.Where(filter).Include(x => x.Categoria);
+                query = query
+                    .Where(filter)
+                    .Include(x => x.Categoria)
+                    .Include(x => x.Ingredientes);
             }
             return await query.FirstOrDefaultAsync();
         }
