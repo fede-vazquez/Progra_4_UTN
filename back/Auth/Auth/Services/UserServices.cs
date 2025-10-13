@@ -11,11 +11,13 @@ namespace Auth.Services
     {
         private readonly IUserRepository _repo;
         private readonly IMapper _mapper;
+        private readonly IEncoderServices _encoderServices;
 
-        public UserServices(IUserRepository repo, IMapper mapper)
+        public UserServices(IUserRepository repo, IMapper mapper, IEncoderServices encoderServices)
         {
             _repo = repo;
             _mapper = mapper;
+            _encoderServices = encoderServices;
         }
 
         async public Task<User> GetOneByEmailOrUsername(string? email, string? username)
@@ -40,6 +42,8 @@ namespace Auth.Services
         async public Task<User> CreateOne(RegisterDTO register)
         {
             var user = _mapper.Map<User>(register);
+
+            user.Password = _encoderServices.Encode(user.Password);
 
             await _repo.CreateOneAsync(user);
 

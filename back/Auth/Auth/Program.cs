@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 // Services
 builder.Services.AddScoped<UserServices>();
 builder.Services.AddScoped<AuthServices>();
+builder.Services.AddScoped<IEncoderServices, EncoderServices>();
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
