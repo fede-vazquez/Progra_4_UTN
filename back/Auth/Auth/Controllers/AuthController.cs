@@ -20,6 +20,10 @@ namespace Auth.Controllers
         }
 
         [HttpPost("register")]
+        [ProducesResponseType(typeof(User), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
+
         async public Task<ActionResult<User>> Register([FromBody] RegisterDTO register)
         {
             try
@@ -27,6 +31,27 @@ namespace Auth.Controllers
                 var created = await _authServices.Register(register);
 
                 return Created("Register", created);
+            }
+            catch (HttpResponseError ex)
+            {
+                return StatusCode((int)ex.StatusCode, new HttpMessage(ex.Message));
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new HttpMessage(ex.Message));
+            }
+        }
+
+        [HttpPost("login")]
+        [ProducesResponseType(typeof(LoginResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(HttpMessage), StatusCodes.Status500InternalServerError)]
+        async public Task<ActionResult<LoginResponseDTO>> Login([FromBody] LoginDTO login)
+        {
+            try
+            {
+                return Ok(await _authServices.Login(login));
             }
             catch (HttpResponseError ex)
             {
