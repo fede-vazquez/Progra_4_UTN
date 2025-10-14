@@ -22,22 +22,15 @@ namespace Auth.Services
 
         async public Task<User> GetOneByEmailOrUsername(string? email, string? username)
         {
-            User user;
             // Solucionar este error.
-            if (!string.IsNullOrEmpty(email))
-            {
-                user = await _repo.GetOneAsync(x => x.Email == email);
-            }
-            else if (!string.IsNullOrEmpty(username))
-            {
-                user = await _repo.GetOneAsync(x => x.UserName == username);
-            }
-            else
+            if (string.IsNullOrEmpty(email) && string.IsNullOrEmpty(username))
             {
                 throw new HttpResponseError(HttpStatusCode.BadRequest, "Email and username are empty");
             }
-
-            return user;
+            
+            var User = await _repo.GetOneAsync(x => x.Email == email || x.UserName == username);
+            
+            return User;
         }
         async public Task<User> CreateOne(RegisterDTO register)
         {
