@@ -43,6 +43,7 @@ builder.Services.AddScoped<IEncoderServices, EncoderServices>();
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRoleRespository, RoleRepository>();
 
 builder.Services.AddAutoMapper(opts => { }, typeof(Mapping));
 
