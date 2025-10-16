@@ -2,6 +2,7 @@
 using Auth.Models.User.Dto;
 using Auth.Services;
 using Auth.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -62,6 +63,14 @@ namespace Auth.Controllers
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, new HttpMessage(ex.Message));
             }
+        }
+
+        [HttpGet("health")]
+        [Authorize]
+        //[AllowAnonymous] - Invalida el [Authorize]
+        public bool Health()
+        {
+            return true;
         }
     }
 }

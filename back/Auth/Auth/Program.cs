@@ -1,9 +1,11 @@
 using Auth.Config;
 using Auth.Repositories;
 using Auth.Services;
+using Auth.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +15,26 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(opts =>
+{
+    opts.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Auth API",
+        Description = "An ASP.NET Core Web Api for managing Auth"
+    });
+    opts.AddSecurityDefinition("Token", new OpenApiSecurityScheme
+    {
+        BearerFormat = "JWT",
+        Description = "JWL Authorization header using the Bearer Scheme.",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Name = "Authorization",
+        Scheme = "bearer"
+    });
+
+    opts.OperationFilter<AuthOperationFilter>();
+});
 
 // Services
 builder.Services.AddScoped<UserServices>();
