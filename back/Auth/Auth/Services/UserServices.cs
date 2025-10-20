@@ -1,4 +1,5 @@
-﻿using Auth.Models.User;
+﻿using Auth.Enums;
+using Auth.Models.User;
 using Auth.Models.User.Dto;
 using Auth.Repositories;
 using Auth.Utils;
@@ -12,12 +13,14 @@ namespace Auth.Services
         private readonly IUserRepository _repo;
         private readonly IMapper _mapper;
         private readonly IEncoderServices _encoderServices;
+        private readonly RoleServices _roleServices;
 
-        public UserServices(IUserRepository repo, IMapper mapper, IEncoderServices encoderServices)
+        public UserServices(IUserRepository repo, IMapper mapper, IEncoderServices encoderServices, RoleServices roleServices)
         {
             _repo = repo;
             _mapper = mapper;
             _encoderServices = encoderServices;
+            _roleServices = roleServices;
         }
 
         async public Task<User> GetOneByEmailOrUsername(string? email, string? username)
@@ -32,15 +35,19 @@ namespace Auth.Services
             
             return User;
         }
-        async public Task<User> CreateOne(RegisterDTO register)
+        async public Task<UserWithoutPassDTO> CreateOne(RegisterDTO register)
         {
             var user = _mapper.Map<User>(register);
 
             user.Password = _encoderServices.Encode(user.Password);
 
+            var role = await _roleServices.GetOneByName(ROLE.USER);
+
+            user.Roles.Add(role);
+
             await _repo.CreateOneAsync(user);
 
-            return user;
+            return _mapper.Map<UserWithoutPassDTO>(user);
         }
     }
 }

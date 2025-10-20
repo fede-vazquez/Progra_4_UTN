@@ -1,4 +1,5 @@
-﻿using Auth.Models.User;
+﻿using Auth.Enums;
+using Auth.Models.User;
 using Auth.Models.User.Dto;
 using Auth.Services;
 using Auth.Utils;
@@ -66,7 +67,7 @@ namespace Auth.Controllers
         }
 
         [HttpGet("health")]
-        [Authorize]
+        [Authorize(Roles = $"{ROLE.USER}, {ROLE.MOD}")]
         //[AllowAnonymous] - Invalida el [Authorize]
         public bool Health()
         {

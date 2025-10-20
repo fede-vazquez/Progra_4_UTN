@@ -14,6 +14,8 @@ namespace Auth.Config
 
             // Auth
             CreateMap<RegisterDTO, User>();
+
+            CreateMap<User, UserWithoutPassDTO>().ReverseMap();
         }
     }
 }

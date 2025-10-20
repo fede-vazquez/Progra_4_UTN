@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Auth.Models.Role;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Auth.Models.User
@@ -14,5 +15,7 @@ namespace Auth.Models.User
         public string Email { get; set; } = null!;
 
         public string Password { get; set; } = null!;
+
+        public List<Role.Role> Roles { get; set; } = new();
     }
 }

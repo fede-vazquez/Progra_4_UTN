@@ -1,5 +1,5 @@
 ﻿using Auth.Config;
-using Auth.Models.Rol;
+using Auth.Models.Role;
 
 namespace Auth.Repositories
 {

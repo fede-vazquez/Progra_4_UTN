@@ -24,7 +24,7 @@ namespace Auth.Services
             _secret = _config.GetSection("Secrets:JWT")?.Value?.ToString() ?? string.Empty;
         }
 
-        async public Task<User> Register(RegisterDTO register)
+        async public Task<UserWithoutPassDTO> Register(RegisterDTO register)
         {
             var user = await _userServices.GetOneByEmailOrUsername(register.Email, register.UserName);
             if (user != null)
@@ -68,6 +68,15 @@ namespace Auth.Services
 
             var claims = new ClaimsIdentity();
             claims.AddClaim(new Claim("id", user.Id.ToString()));
+            
+            if(user.Roles != null || user.Roles?.Count > 0)
+            {
+                foreach (var Role in user.Roles)
+                {
+                    var claim = new Claim(ClaimTypes.Role, Role.Name);
+                    claims.AddClaim(claim);
+                }
+            }
 
             var tokenDescriptor = new SecurityTokenDescriptor()
             {

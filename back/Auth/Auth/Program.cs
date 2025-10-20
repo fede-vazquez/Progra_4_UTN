@@ -39,6 +39,7 @@ builder.Services.AddSwaggerGen(opts =>
 // Services
 builder.Services.AddScoped<UserServices>();
 builder.Services.AddScoped<AuthServices>();
+builder.Services.AddScoped<RoleServices>();
 builder.Services.AddScoped<IEncoderServices, EncoderServices>();
 
 // Repositories
